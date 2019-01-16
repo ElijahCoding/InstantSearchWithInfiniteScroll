@@ -12,26 +12,34 @@
         />
       </div>
 
-      <ais-results
-          :stack="true"
-          :results-per-page="10"
-      >
-        <template slot-scope="{ result }">
-          <div class="box">
-            <h1 class="title">
-              {{ result.title }}
-            </h1>
-            <p>{{ result.teaser }}</p>
-          </div>
-        </template>
-      </ais-results>
+      <template v-if="searchIsntEmpty">
+        <ais-results
+            :stack="true"
+            :results-per-page="10"
+        >
+          <template slot-scope="{ result }">
+            <div class="box">
+              <h1 class="title">
+                {{ result.title }}
+              </h1>
+              <p>{{ result.teaser }}</p>
+            </div>
+          </template>
+        </ais-results>
 
-      <AppLoader
-          v-observe-visibility="{
-            callback: incrementPage,
-            throttle: 500
-          }"
-      />
+        <ais-no-results>
+          Hmm, no results
+        </ais-no-results>
+
+        <AppLoader
+            v-if="this.searchStore.results.length"
+            v-observe-visibility="{
+              callback: incrementPage,
+              throttle: 500
+            }"
+        />
+
+      </template>
     </ais-index>
   </div>
 </template>
@@ -51,6 +59,16 @@ export default {
     }
   },
 
+  computed: {
+    searchIsntEmpty () {
+      if (!this.searchStore) {
+        return false
+      }
+
+      return this.searchStore._helper.state.query.length > 0
+    }
+  },
+
   methods: {
     incrementPage (visible) {
       if (visible) {
@@ -62,6 +80,16 @@ export default {
 
         this.searchStore.refresh()
       }
+    }
+  },
+
+  watch: {
+    'searchStore.query' (value) {
+      this.$router.replace({
+        query: {
+          q: value
+        }
+      })
     }
   },
 
