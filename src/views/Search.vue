@@ -3,6 +3,7 @@
     <ais-index
         index-name="articles"
         :search-store="searchStore"
+        :query="initialQuery"
     >
       <div class="field">
         <ais-input
@@ -60,6 +61,16 @@ export default {
   },
 
   computed: {
+    initialQuery () {
+      const query = this.$route.query.q
+
+      if (typeof query === 'undefined') {
+        return ''
+      }
+
+      return query
+    },
+
     searchIsntEmpty () {
       if (!this.searchStore) {
         return false
