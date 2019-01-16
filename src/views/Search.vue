@@ -25,17 +25,34 @@
           </div>
         </template>
       </ais-results>
+
+      <AppLoader
+          v-observe-visibility="{
+            callback: incrementPage
+          }"
+      />
     </ais-index>
   </div>
 </template>
 
 <script>
+import AppLoader from '@/components/AppLoader'
 import { createFromAlgoliaCredentials } from 'vue-instantsearch'
 
 export default {
+  components: {
+    AppLoader
+  },
+
   data () {
     return {
       searchStore: null
+    }
+  },
+
+  methods: {
+    incrementPage () {
+      console.log('incremented');
     }
   },
 
