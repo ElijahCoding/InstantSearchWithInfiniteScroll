@@ -28,7 +28,8 @@
 
       <AppLoader
           v-observe-visibility="{
-            callback: incrementPage
+            callback: incrementPage,
+            throttle: 500
           }"
       />
     </ais-index>
@@ -51,8 +52,16 @@ export default {
   },
 
   methods: {
-    incrementPage () {
-      console.log('incremented');
+    incrementPage (visible) {
+      if (visible) {
+        const params = this.searchStore.queryParameters
+
+        this.searchStore.queryParameters = Object.assign({}, params, {
+          page: params.page + 1
+        })
+
+        this.searchStore.refresh()
+      }
     }
   },
 
@@ -62,7 +71,9 @@ export default {
       '43d16e02844e04deb0abb99e937c0fee'
     )
 
-    console.log(this.searchStore);
+    this.searchStore.queryParameters = {
+      page: 1
+    }
   }
 }
 </script>
