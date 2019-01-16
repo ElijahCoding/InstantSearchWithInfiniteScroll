@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "bulma": "^0.7.2",
+    "intersection-observer": "^0.5.1",
     "vue": "^2.5.21",
     "vue-instantsearch": "^1.7.0",
     "vue-observe-visibility": "^0.4.3",

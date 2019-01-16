@@ -4,6 +4,9 @@ import router from './router'
 import InstantSearch from 'vue-instantsearch'
 import VueObserveVisibility from 'vue-observe-visibility'
 
+
+require('intersection-observer')
+
 Vue.use(InstantSearch)
 Vue.use(VueObserveVisibility)
 
