@@ -1,5 +1,13 @@
 <template>
-  <div id="app">
-    <router-view/>
+  <div id="app" class="app">
+    <div class="container">
+      <router-view/>
+    </div>
   </div>
 </template>
+
+<style lang="scss">
+  .app {
+    margin: 40px 0;
+  }
+</style>
